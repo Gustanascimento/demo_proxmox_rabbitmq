@@ -1,4 +1,6 @@
 import pika
+from time import sleep
+from datetime import datetime
 
 class RabbitMQConsumer:
     def __init__(self, queue_name: str):
@@ -9,12 +11,13 @@ class RabbitMQConsumer:
         self.channel.queue_declare(queue=self.queue_name)
 
     def run_consumer(self):
-        print(f" [*] Waiting for messages in {self.queue_name}. To exit press CTRL+C")
+        print(f'📡 Aguardando mensagens na fila "{self.queue_name}"...\n')
         
         for method, properties, body in self.channel.consume(self.queue_name):
-            message: str = body.decode()
-            print(f" [x] Message received from queue {self.queue_name}: {message}")
+            message = body.decode()
+            print(f" ✅ Mensagem processada às {datetime.now().strftime('%H:%M:%S')}: {message}")
             self.channel.basic_ack(method.delivery_tag)
+            sleep(4)
 
 if __name__ == "__main__":
     consumer = RabbitMQConsumer(queue_name='test_queue')
