@@ -15,18 +15,20 @@ class RabbitMQProducer:
 
     def send_message(self, message):
         self.channel.basic_publish(exchange='', routing_key=self.queue_name, body=message)
-        print(f" [x] Sent {message}")
+        print(f'🐳 Enviou: "{message}"\n')
 
     def close_connection(self):
         self.connection.close()
 
 
 if __name__ == "__main__":
+    print("🚀 Iniciando o produtor de mensagens 🚀\n\n")
+    
     queue_name = 'test_queue'
     producer = RabbitMQProducer(queue_name)
     
     while True:
-        mensagem = input("\nDigite a mensagem ou pressione enter para sair: ")
+        mensagem = input("👉 Digite uma mensagem ou pressione enter para sair: ")
         
         if len(mensagem.strip()) == 0:
             break
