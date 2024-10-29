@@ -13,8 +13,6 @@ services:
 volumes:
     rabbitmq_data:
     rabbitmq_log:
-
-
 networks:
   rabbitmq_go_net:
     driver: bridge
